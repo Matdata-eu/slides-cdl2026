@@ -63,7 +63,7 @@ const Y = 110
 .layer.off { opacity: 0; transform: scale(.94); }
 .sol { stroke: var(--c-sky); stroke-width: 6; stroke-linecap: round; }
 .op { fill: var(--c-bg); stroke: var(--c-sky); stroke-width: 4; }
-.opn { font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; fill: var(--c-ink); }
+.opn { font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; fill: var(--c-ink); }
 .lbl { font-size: 13px; fill: var(--c-ink-mod); }
 .area { fill: rgba(100, 200, 250, .06); stroke: var(--c-sky); stroke-width: 1.4; stroke-dasharray: 6 4; }
 .trk { fill: none; stroke: var(--c-ink); stroke-width: 2.6; opacity: .85; }

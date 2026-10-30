@@ -68,7 +68,7 @@ onUnmounted(() => timers.forEach(clearTimeout))
 .core { position: absolute; left: 450px; top: 150px; transform: translate(-50%, -50%); width: 150px; height: 150px; border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #2A5BB8, #1E2869 70%); display: flex; flex-direction: column; align-items: center; justify-content: center;
   box-shadow: 0 0 0 3px var(--c-sky), 0 0 40px rgba(100, 200, 250, .45); z-index: 2; }
-.dim { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: #fff; line-height: 1; }
+.dim { font-family: 'Poppins', sans-serif; font-size: 40px; font-weight: 700; color: #fff; line-height: 1; }
 .dim-sub { font-size: 11px; color: #C4EFFF; margin-top: 4px; }
 .ring { position: absolute; inset: -10px; border-radius: 50%; border: 1.5px solid var(--c-sky); opacity: 0; animation: ripple 3s ease-out infinite; }
 .ring.r2 { animation-delay: 1.5s; }

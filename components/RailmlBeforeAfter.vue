@@ -55,7 +55,7 @@ const MAX = 105
 .side.before.dim { opacity: .5; filter: saturate(.5); }
 .side.after { opacity: 0; transform: translateY(18px); border-color: var(--c-green); box-shadow: 0 0 26px rgba(53, 222, 109, .18); min-height: 140px; }
 .side.after.on { opacity: 1; transform: none; }
-.tag { position: absolute; left: 14px; top: 18px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+.tag { position: absolute; left: 14px; top: 18px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
 .before .tag { color: var(--c-red); } .after .tag { color: var(--c-green); }
 .flow { display: flex; align-items: stretch; }
 .chip { flex: 1; min-width: 0; text-align: center; font-size: 13px; font-weight: 600; line-height: 1.2; padding: 7px 6px; border-radius: 10px; background: var(--c-surface); border: 1px solid var(--c-stroke); display: flex; flex-direction: column; justify-content: center; }
@@ -68,7 +68,7 @@ const MAX = 105
 .arrow.flow::before { background: repeating-linear-gradient(90deg, var(--c-green) 0 5px, transparent 5px 9px); background-size: 9px 2px; animation: dash .6s linear infinite; }
 .arrow.flow::after { border-left-color: var(--c-green); }
 @keyframes dash { to { background-position: 9px 0 } }
-.saved { position: absolute; right: 16px; bottom: 12px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; color: var(--c-green);
+.saved { position: absolute; right: 16px; bottom: 12px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 20px; color: var(--c-green);
   text-shadow: 0 0 16px rgba(53, 222, 109, .5); opacity: 0; transform: scale(1.6); transition: all .45s cubic-bezier(.3, 1.6, .5, 1) 1.4s; }
 .saved.on { opacity: 1; transform: none; }
 </style>

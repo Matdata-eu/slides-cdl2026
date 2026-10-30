@@ -1,7 +1,7 @@
 /* Look borrowed from the Bane NOR DIM decks (slidev-addon-banenor), so the use case feels at home.
    Colours come from the Bane NOR design-system tokens (brand blue 700/500/300, slate/gray/ghost neutrals).
    Every colour used by slides and components is a variable here, so light and dark mode stay readable. */
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap');
 
 :root {
   --bn-font: myriad-variable, "Myriad Pro", "Source Sans 3", "Segoe UI", sans-serif;
@@ -117,18 +117,18 @@ html.dark {
   padding-bottom: 3.2rem;
 }
 .slidev-layout h1 {
-  font-family: 'Space Grotesk', var(--bn-font); letter-spacing: -.01em; font-size: 2.1rem; line-height: 1.15;
+  font-family: 'Poppins', var(--bn-font); letter-spacing: -.01em; font-size: 2.1rem; line-height: 1.15;
   background: linear-gradient(90deg, #fff 30%, #9FDDFC); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .slidev-layout h1::after { width: 72px; background: linear-gradient(90deg, var(--c-sky), var(--c-purple)); box-shadow: 0 0 12px var(--c-glow); }
-.slidev-layout h2, .slidev-layout h3 { font-family: 'Space Grotesk', var(--bn-font); }
+.slidev-layout h2, .slidev-layout h3 { font-family: 'Poppins', var(--bn-font); }
 .slidev-layout.section { background: radial-gradient(100% 120% at 50% 0%, #1E2869, #0B1226 70%); text-align: center; }
 .slidev-layout.section h1 { font-size: 3rem; }
-.kicker { font-family: 'Space Grotesk', var(--bn-font); text-transform: uppercase; letter-spacing: .18em; font-size: 12px; color: var(--c-sky); font-weight: 700; }
+.kicker { font-family: 'Poppins', var(--bn-font); text-transform: uppercase; letter-spacing: .18em; font-size: 12px; color: var(--c-sky); font-weight: 700; }
 .glass { background: linear-gradient(160deg, rgba(31, 43, 77, .9), rgba(23, 33, 61, .75)); border: 1px solid var(--c-stroke); border-radius: 14px; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); }
 .glow-sky { box-shadow: 0 0 0 1px var(--c-sky), 0 0 24px var(--c-glow); }
 .hl-sky { color: var(--c-sky); } .hl-amber { color: var(--c-amber); } .hl-green { color: var(--c-green); } .hl-red { color: var(--c-red); } .hl-purple { color: var(--c-purple); }
-.big-quote { font-family: 'Space Grotesk', var(--bn-font); font-size: 1.9rem; line-height: 1.25; font-weight: 600; }
+.big-quote { font-family: 'Poppins', var(--bn-font); font-size: 1.9rem; line-height: 1.25; font-weight: 600; }
 .pop-in { animation: pop-in .5s cubic-bezier(.3, 1.6, .5, 1) both; }
 @keyframes pop-in { from { opacity: 0; transform: scale(.7) } to { opacity: 1; transform: none } }
 .slidev-vclick-target { transition: opacity .35s ease, transform .35s ease; }
@@ -142,7 +142,34 @@ html.dark {
 .cdl-cover-inner { position: absolute; inset: 0 30% 42px 0; padding: 48px 56px; display: flex; flex-direction: column; justify-content: center; z-index: 2; color: #fff; }
 .cdl-cover-inner h1 { font-size: 2.9rem !important; line-height: 1.05 !important; margin: 6px 0 0; }
 .cdl-cover-inner h1::after { margin-inline: 0 !important; margin-top: 16px; }
-.cdl-sub { font-family: 'Space Grotesk', var(--bn-font); font-size: 1.35rem; color: #9FDDFC; margin-top: 14px; }
+.cdl-sub { font-family: 'Poppins', var(--bn-font); font-size: 1.35rem; color: #9FDDFC; margin-top: 14px; }
 .cdl-cover-inner p { margin: 0; }
 .slidev-layout .slidev-code { background: #0F1830 !important; border: 1px solid var(--c-stroke); border-radius: 10px; }
 .small-code .slidev-code { font-size: .62rem !important; line-height: 1.3 !important; }
+
+/* ---------- design mix: Bane NOR navy + sky, Matdata blue + pink, Connected Data London black + lavender + coral ---------- */
+html.dark {
+  --c-bg: #0A0B1A;
+  --c-surface: #151833;
+  --c-surface-2: #1C2045;
+  --c-stroke: #2D3260;
+  --c-purple: #B494DB;
+  --c-lavender: #D0AAFD;
+  --c-pink: #EB518F;
+  --c-coral: #FE6263;
+  --c-mblue: #2384EB;
+}
+.slidev-layout {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(208, 170, 253, .07) 1px, transparent 0) 0 0 / 22px 22px,
+    radial-gradient(110% 85% at 90% -15%, rgba(30, 40, 105, .85), transparent 60%),
+    radial-gradient(80% 70% at -10% 115%, rgba(141, 102, 186, .28), transparent 60%),
+    radial-gradient(50% 40% at 105% 105%, rgba(235, 81, 143, .12), transparent 70%),
+    var(--c-bg);
+}
+.slidev-layout h1 { font-weight: 700; letter-spacing: -.015em; background: linear-gradient(90deg, #fff 35%, #D0AAFD); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.slidev-layout h1::after { background: linear-gradient(90deg, #64C8FA, #8D66BA, #EB518F); box-shadow: 0 0 12px rgba(141, 102, 186, .5); }
+.kicker { display: inline-block; color: #D0AAFD; background: rgba(141, 102, 186, .18); border: 1px solid rgba(208, 170, 253, .35); border-radius: 99px; padding: 2px 10px; font-family: 'Poppins', var(--bn-font); font-size: 10.5px; letter-spacing: .14em; }
+.slidev-layout.section { background: radial-gradient(90% 110% at 50% -10%, #2A2A6E, #0A0B1A 70%), #0A0B1A; }
+.slidev-layout.section h1 { font-size: 3.1rem; }
+.glass { background: linear-gradient(160deg, rgba(28, 32, 69, .92), rgba(21, 24, 51, .8)); border-color: var(--c-stroke); }

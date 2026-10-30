@@ -130,7 +130,7 @@ const arrived = computed(() => phase.value >= 2)
 .blk { fill: var(--c-surface); stroke: var(--c-stroke); stroke-width: 1.2; transition: all .5s ease; }
 .rail { stroke: var(--c-ink-subtle); stroke-width: 2.5; stroke-linecap: round; }
 .ramp { stroke: var(--c-ink-subtle); stroke-width: 2.5; stroke-dasharray: 4 3; }
-.nm { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px; fill: var(--c-ink); }
+.nm { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; fill: var(--c-ink); }
 .sb { font-size: 12.5px; fill: var(--c-ink-mod); }
 .s0 .blk, .s1 .blk { opacity: .7; }
 .prod .blk { fill: url(#ml-prod); stroke: #35DE6D; stroke-width: 2.5; filter: drop-shadow(0 0 14px rgba(53, 222, 109, .55)); }
@@ -146,7 +146,7 @@ const arrived = computed(() => phase.value >= 2)
 .wheel { fill: #1E2869; }
 .lamp { fill: #FFE58A; filter: drop-shadow(0 0 3px #FFE58A); }
 .stamp { position: absolute; left: 47%; top: 0; transform: rotate(-8deg) scale(2.2); opacity: 0;
-  font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: .14em; font-size: 15px; color: #35DE6D;
+  font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: .14em; font-size: 15px; color: #35DE6D;
   border: 3px solid #35DE6D; border-radius: 8px; padding: 3px 12px; transition: all .35s cubic-bezier(.3, 1.6, .5, 1); }
 .stamp.on { opacity: 1; transform: rotate(-8deg) scale(1); box-shadow: 0 0 22px rgba(53, 222, 109, .45); }
 .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }

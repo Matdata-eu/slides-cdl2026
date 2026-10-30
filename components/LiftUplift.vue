@@ -49,7 +49,7 @@ const after = computed(() => props.step >= 1)
 .lane.before.dim { opacity: .45; filter: saturate(.4); transform: scale(.97); }
 .lane.after { opacity: 0; transform: translateY(18px); border-color: var(--c-green); box-shadow: 0 0 26px rgba(53, 222, 109, .18); }
 .lane.after.on { opacity: 1; transform: none; }
-.tag { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+.tag { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
 .before .tag { color: var(--c-red); } .after .tag { color: var(--c-green); }
 .chip { flex: 1; min-width: 0; text-align: center; font-size: 13px; font-weight: 600; line-height: 1.2; padding: 8px 6px; border-radius: 10px; background: var(--c-surface); border: 1px solid var(--c-stroke); display: flex; flex-direction: column; justify-content: center; }
 .chip small { font-weight: 400; font-size: 10.5px; color: var(--c-ink-mod); margin-top: 3px; }

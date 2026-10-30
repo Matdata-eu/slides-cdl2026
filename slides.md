@@ -132,20 +132,16 @@ Norway's **national railway infrastructure manager**.
 -->
 
 ---
-layout: center
----
 
-<img v-click.hide src="/assets/railway-reality-dark.svg" class="h-96 absolute top-10 left-1/2 -translate-x-1/2" />
-<img v-after src="/assets/railway-reality-dark-silos.svg" class="h-96 absolute top-10 left-1/2 -translate-x-1/2" />
+<ShatteredRailway :step="$clicks" />
 
-<div v-click class="absolute bottom-14 left-0 right-0 text-center">
-  <div class="big-quote">One authoritative model of the railway,<br><span class="hl-sky">serving every use case.</span></div>
-</div>
+<div v-click="3" />
 
 <!--
-[1:15] An infrastructure manager doesn't just run trains. It builds, maintains, renews and plans the network decades ahead. Maintenance, projects, operations, timetabling, ERTMS, regulators: all of them depend on the same infrastructure data.
-(click) Historically every domain grew its own application, its own data model and its own copy of the railway. Sometimes so different you'd think they describe different railways. A change in one never reaches the others.
-(click) DIM's goal: one authoritative model of the infrastructure, as a knowledge graph, that every use case draws from.
+[1:30] I believe the railway is the most fantastic environment there is. I don't know any other industry that covers this many distinct concepts and niche specialities in one system: track, switches, signalling, ETCS, catenary and substations, bridges and tunnels, timetables, rolling stock, possessions, work orders. And they are all connected.
+(click) Then computers came along. And we took this beautiful, complete model, dropped it on the floor, and it broke into a million pieces.
+(click) We picked up the pieces that suited us, glued them together in our own vision, and called them use cases. Maintenance, timetabling, ERTMS, energy, projects. Look at how many of them carry their own copy of the track, each a little different. Sometimes so different you'd think they describe different railways. And a change in one never reaches the others.
+(click) The DIM project is about restoring the complete picture: one model of the railway, as a knowledge graph, where every use case is a view on the same reality.
 -->
 
 ---
@@ -247,7 +243,7 @@ Outputs: railML 3.2 / 3.3 · SPARQL endpoint · JSON-LD REST API · RINF · data
 
 <style>
 .stat { padding: 18px 10px; text-align: center; }
-.stat .n { font-family: 'Space Grotesk', sans-serif; font-size: 2.6rem; font-weight: 700; line-height: 1; text-shadow: 0 0 22px currentColor; }
+.stat .n { font-family: 'Poppins', sans-serif; font-size: 2.6rem; font-weight: 700; line-height: 1; text-shadow: 0 0 22px currentColor; }
 .stat .l { font-size: 14px; color: var(--c-ink-mod); margin-top: 6px; }
 </style>
 
@@ -256,8 +252,19 @@ Outputs: railML 3.2 / 3.3 · SPARQL endpoint · JSON-LD REST API · RINF · data
 -->
 
 ---
-layout: full
 station: Value
+---
+
+# The value tour
+
+<ValueTour />
+
+<!--
+[0:20] So what does a knowledge graph give the business? Eight stops on this line, all running on the same graph: the portal, key figures, the RINF status, the search builder, the data catalog, the TPS mapping, the validation portal and the REST API.
+-->
+
+---
+layout: full
 ---
 
 <Clip full src="/assets/01-website-navigation.gif" caption="DIM portal · railML files per subnetwork · datasets in RDF, JSON-LD and CSV" />
@@ -768,7 +775,7 @@ station: Q&A
 
 <style>
 .tkw { padding: 7px 14px; font-size: 1.02rem; line-height: 1.35; }
-.num { margin-right: 10px; vertical-align: middle; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-weight: 700; font-family: 'Space Grotesk', sans-serif; color: #0B1226; font-size: 14px; }
+.num { margin-right: 10px; vertical-align: middle; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-weight: 700; font-family: 'Poppins', sans-serif; color: #0B1226; font-size: 14px; }
 .num.sky { background: var(--c-sky); } .num.amber { background: var(--c-amber); } .num.green { background: var(--c-green); } .num.purple { background: var(--c-purple); }
 </style>
 
