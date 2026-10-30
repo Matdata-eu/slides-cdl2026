@@ -75,7 +75,7 @@ A **one-person data consultancy** for semantic mapping and knowledge graphs in r
   <img src="/assets/era.svg" style="height:1.5rem" alt="ERA" />
   <img src="/assets/certifer.jpg" style="height:1.1rem" alt="Certifer" />
   <img src="/assets/Infrabel_logo.svg" style="height:1.1rem" alt="Infrabel" />
-  <img src="/assets/datatreehouse.svg" style="height:1.1rem" alt="Data Treehouse" />
+  <span style="display:inline-flex;align-items:center;gap:.3rem;color:#1d3b2a;font-weight:700;font-size:.8rem"><img src="/assets/datatreehouse.svg" style="height:1.1rem" alt="" />Datatreehouse</span>
   <img src="/assets/Kapernikov_logo_horiz.png" style="height:1.1rem" alt="Kapernikov" />
   <img src="/assets/cropped-cognizone_logo-2048x529.png" style="height:1.1rem" alt="Cognizone" />
   <img src="/assets/liw-member-5081.png" style="height:1.1rem" alt="Transurb" />
@@ -87,7 +87,7 @@ A **one-person data consultancy** for semantic mapping and knowledge graphs in r
 
 <div class="pl-6 border-l border-gray-400/40 text-sm">
 
-<img src="/assets/banenor-logo-inverted.svg" style="height:1.9rem;margin-bottom:0.6rem" alt="Bane NOR logo" />
+<img src="/assets/banenor-logo-inverted.svg" style="height:3.4rem;margin:-0.6rem 0 0.1rem" alt="Bane NOR logo" />
 
 Norway's **national railway infrastructure manager**.
 
@@ -600,7 +600,7 @@ overpass: true
 
 ---
 layout: section
-station: After
+station: Pipeline
 ---
 
 <div class="kicker">Part 4</div>
@@ -638,19 +638,16 @@ That's the message I want you to take home: describe the source first, then tran
 ```sparql
 CONSTRUCT {
   ?version a trase:Plattformkant ;
-    dcterms:isVersionOf ?object ;
     ?property ?value .
 } WHERE {
   SERVICE <x-sparql-anything:location=
       plattformkant.csv,csv.headers=true> {
     ?row xyz:property_oid ?oid ;
-      xyz:property_object_oid ?object_oid ;
       ?column ?value .
   }
+  BIND(fx:entity(trase:, ?oid) AS ?version)
   BIND(fx:entity(trase:, STRAFTER(
       STR(?column), STR(xyz:))) AS ?property)
-  BIND(fx:entity(trase:, ?oid) AS ?version)
-  BIND(fx:entity(trase:, ?object_oid) AS ?object)
 }
 ```
 
@@ -659,25 +656,30 @@ CONSTRUCT {
 <div>
 <div class="kicker mb-1">Uplift · a SHACL shape with a rule</div>
 
-```turtle {all|2-3|5-9|11-19}
+```turtle {all|1-4|6-10|12-25}
 bnd:_upliftShape_trase_Plattformkant a sh:NodeShape ;
   sh:targetClass trase:Plattformkant ;
   sh:property bnd:_upliftShape_trase_Plattformkant_lengde ;
-  sh:rule bnd:_uplift_trase_Plattformkant .
+  sh:rule bnd:_uplift_trase_Plattformkant_lengde .
+
 bnd:_upliftShape_trase_Plattformkant_lengde
   a sh:PropertyShape ;
   sh:path trase:lengde ;
   sh:maxCount 1 ;
   sh:pattern "^[0-9]+(\\.[0-9]+)?$" .
-bnd:_uplift_trase_Plattformkant a sh:SPARQLRule ;
+
+bnd:_uplift_trase_Plattformkant_lengde a sh:SPARQLRule ;
   sh:construct """CONSTRUCT {
-      ?edge a railml3:PlatformEdge ;
-        prov:wasDerivedFrom $this ;
-        railml3:hasLength ?length .
+      ?edge railml3:hasLength ?length ;
+        prov:wasDerivedFrom $this .
+      ?length qudt:numericValue ?value ;
+        qudt:hasUnit unit:M .
     } WHERE {
-      $this trase:lengde ?lengde ;
-        trase:navn ?navn .
-      ...
+      $this trase:lengde ?lengde .
+      BIND(STRAFTER(STR($this), STR(trase:)) AS ?oid)
+      BIND(IRI(CONCAT(STR(bnd:), "_platform_edge_", ?oid)) AS ?edge)
+      BIND(IRI(CONCAT(STR(bnd:), "_length_", ?oid)) AS ?length)
+      BIND(STRDT(?lengde, xsd:decimal) AS ?value)
     }""" .
 ```
 
@@ -685,11 +687,10 @@ bnd:_uplift_trase_Plattformkant a sh:SPARQLRule ;
 
 </div>
 
-<div class="text-xs muted">Simplified from the DIM pipeline. Validation findings are reported on every run and never block it.</div>
 
 <!--
-[1:00] What it looks like. On the left the lift: the same query shape for every table. Every column becomes a trase property, every row a version of a source object. No railML anywhere.
-On the right the uplift. (click) A node shape targets the source class, a Trasé platform edge. (click) Property shapes validate the source: at most one length, and it must be a number. (click) And the rule builds the railML platform edge, with prov:wasDerivedFrom pointing back to the source version. The body is still SPARQL, so the team didn't have to learn a new language.
+[1:00] What it looks like. On the left the lift: the same query shape for every table. Every row becomes a trase entity, every column a trase property. No railML anywhere.
+On the right the uplift. (click) A node shape targets the source class, a Trasé platform edge. (click) A property shape validates the source: at most one length, and it must be a number. (click) And the rule turns that length into the railML length of the platform edge, with prov:wasDerivedFrom pointing back to the source entity. The body is still SPARQL, so the team didn't have to learn a new language.
 -->
 
 ---

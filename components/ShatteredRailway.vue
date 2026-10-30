@@ -2,7 +2,7 @@
 /**
  * The opening pitch. step 0: the railway as one complete model, a graph of distinct concepts.
  * step 1: computers came and we dropped it; the pieces scatter. step 2: we picked up the pieces we liked,
- * glued them together our own way and called them use cases (note how many silos carry their own Track).
+ * glued them together our own way and called them use cases (note how many silos carry their own track segment).
  * step 3: DIM puts the complete picture back together.
  */
 import { computed } from 'vue'
@@ -10,58 +10,70 @@ import { computed } from 'vue'
 const props = withDefaults(defineProps<{ step?: number }>(), { step: 0 })
 const s = computed(() => Math.max(0, Math.min(3, props.step)))
 
-const labels = [
-  'Track', 'Rail', 'Sleeper', 'Ballast', 'Switch', 'Crossing', 'Signal', 'Balise',
-  'Axle counter', 'Interlocking', 'ETCS', 'Catenary', 'Substation', 'Neutral section', 'Platform', 'Station',
-  'Tunnel', 'Bridge', 'Level crossing', 'Culvert', 'Gradient', 'Curve', 'Speed limit', 'Mileage',
-  'Line', 'Timetable', 'Train path', 'Rolling stock', 'Possession', 'Work order', 'Noise barrier', 'Earthworks',
+// the concepts and relations of the "why railway data needs a knowledge graph" drawing, at its layout
+const concepts: [string, number, number][] = [
+  ['VerticalSlope', 565, 85], ['Maintenance centre', 810, 92], ['Road', 965, 143], ['Government', 1143, 40],
+  ['PPIP', 1428, 40], ['HorizontalCurve', 367, 193], ['Track segment', 711, 300], ['Investment project', 1287, 193],
+  ['LevelCrossing', 1010, 319], ['Grid operator', 1500, 262], ['SpeedSection', 181, 405], ['Train', 494, 483],
+  ['Client', 705, 464], ['Signal', 840, 485], ['Power distribution shelter', 1227, 405], ['Substation', 1510, 470],
+  ['PlatformEdge', 160, 599], ['Switch heating', 1123, 577], ['Client ', 1298, 553], ['Switch', 936, 646],
+  ['Siding', 1272, 692], ['Station', 110, 781], ['AccountingSection', 460, 754], ['SectionInsulator', 750, 876],
+]
+const rel: [string, string, string][] = [
+  ['Government', 'Investment project', 'pays for'], ['PPIP', 'Investment project', 'pays for'],
+  ['Investment project', 'LevelCrossing', 'plans renewal on'], ['Investment project', 'Power distribution shelter', 'plans renewal on'],
+  ['Maintenance centre', 'Track segment', 'has work order on'], ['Maintenance centre', 'LevelCrossing', 'has work order on'],
+  ['Road', 'LevelCrossing', 'crosses'], ['VerticalSlope', 'Track segment', 'gives gradient to'],
+  ['HorizontalCurve', 'Track segment', 'curves'], ['SpeedSection', 'HorizontalCurve', 'reduced speed because'],
+  ['Train', 'HorizontalCurve', 'max curvature & cant'], ['Train', 'SpeedSection', 'respects'],
+  ['Train', 'Track segment', 'is now on'], ['Signal', 'Track segment', 'is on'],
+  ['Signal', 'LevelCrossing', 'protects'], ['Signal', 'Switch', 'protects'],
+  ['Power distribution shelter', 'Signal', 'powers'], ['Power distribution shelter', 'Switch heating', 'powers'],
+  ['Substation', 'Power distribution shelter', 'powers'], ['Grid operator', 'Substation', 'charges grid access of'],
+  ['Client', 'Train', 'pays for'], ['Train', 'PlatformEdge', 'planned to stop at'], ['PlatformEdge', 'Station', 'part of'],
+  ['Train', 'AccountingSection', 'benefits'], ['Signal', 'AccountingSection', 'generates costs on'],
+  ['Switch', 'AccountingSection', 'generates costs on'], ['Switch heating', 'Switch', 'part of'],
+  ['Switch', 'Siding', 'gives access to'], ['Client ', 'Siding', 'pays for'], ['Substation', 'Siding', 'powers'],
+  ['SectionInsulator', 'Switch', 'is on diverging track of'], ['SectionInsulator', 'Substation', 'separates sections from'],
 ]
 const rnd = (i: number, salt: number) => {
   const v = Math.sin(i * 91.7 + salt * 47.3) * 43758.5453
   return v - Math.floor(v)
 }
-const W = 940, H = 360, CX = W / 2, CY = H / 2 + 6
-// home positions: 8 columns × 4 rows with jitter, a dense web across the slide
-const nodes = labels.map((l, i) => {
-  const col = i % 8, row = Math.floor(i / 8)
-  const x = 70 + col * 114 + (row % 2) * 40 + (rnd(i, 1) - 0.5) * 40
-  const y = 60 + row * 80 + (rnd(i, 2) - 0.5) * 30
+const W = 940, H = 360, CX = W / 2, CY = H / 2 + 6, DX = 852, DY = 322
+const nodes = concepts.map(([l, rx, ry], i) => {
+  const x = 50 + (rx - 110) * (840 / 1400)
+  const y = 16 + (ry - 40) * (330 / 836)
   const dx = x - CX, dy = y - CY
   const d = Math.hypot(dx, dy) || 1
   const push = 70 + rnd(i, 3) * 120
   return {
-    i, l, x, y,
+    i, l: l.trim(), id: l, x, y,
     sx: x + (dx / d) * push + (rnd(i, 4) - 0.5) * 60,
     sy: y + (dy / d) * push * 0.6 + 70 + rnd(i, 5) * 90,
     sr: (rnd(i, 6) - 0.5) * 120,
   }
 })
-// edges: every node to its three nearest neighbours
-const edges: [number, number][] = []
-nodes.forEach((a) => {
-  nodes.filter(b => b.i !== a.i)
-    .sort((p, q) => Math.hypot(p.x - a.x, p.y - a.y) - Math.hypot(q.x - a.x, q.y - a.y))
-    .slice(0, 3)
-    .forEach((b) => { if (!edges.some(([p, q]) => (p === a.i && q === b.i) || (p === b.i && q === a.i))) edges.push([a.i, b.i]) })
-})
+const byId = (id: string) => nodes.find(n => n.id === id)!
+const edges: [number, number, string][] = rel.map(([a, b, l]) => [byId(a).i, byId(b).i, l])
 
 const clusters = [
-  { name: 'Maintenance', tone: '#FAC414', items: ['Track', 'Rail', 'Sleeper', 'Switch', 'Work order', 'Possession', 'Bridge', 'Culvert'] },
-  { name: 'Timetabling', tone: '#B494DB', items: ['Track', 'Station', 'Platform', 'Timetable', 'Train path', 'Speed limit'] },
-  { name: 'ERTMS', tone: '#64C8FA', items: ['Track', 'Signal', 'Balise', 'ETCS', 'Interlocking', 'Gradient', 'Speed limit'] },
-  { name: 'Energy', tone: '#35DE6D', items: ['Track', 'Catenary', 'Substation', 'Neutral section'] },
-  { name: 'Projects', tone: '#EB518F', items: ['Track', 'Line', 'Mileage', 'Station', 'Tunnel', 'Earthworks', 'Platform'] },
+  { name: 'Maintenance', tone: '#FAC414', items: ['Track segment', 'Maintenance centre', 'LevelCrossing', 'Switch', 'Switch heating', 'Signal'] },
+  { name: 'Timetabling', tone: '#B494DB', items: ['Track segment', 'Train', 'Station', 'PlatformEdge', 'SpeedSection', 'HorizontalCurve'] },
+  { name: 'Finance', tone: '#64C8FA', items: ['Track segment', 'AccountingSection', 'Client', 'Investment project', 'Government', 'PPIP'] },
+  { name: 'Energy', tone: '#35DE6D', items: ['Track segment', 'Substation', 'Grid operator', 'Power distribution shelter', 'SectionInsulator', 'Siding'] },
+  { name: 'Projects', tone: '#EB518F', items: ['Track segment', 'Investment project', 'LevelCrossing', 'Road', 'VerticalSlope', 'Station'] },
 ]
-const CW = 168, CG = 15, CX0 = (W - (clusters.length * CW + (clusters.length - 1) * CG)) / 2
+const CW = 176, CG = 9, CX0 = (W - (clusters.length * CW + (clusters.length - 1) * CG)) / 2
 const boxX = (c: number) => CX0 + c * (CW + CG)
 // pieces: the first piece of a concept is the original, the others are the copies each silo made
 const seen = new Set<string>()
 const pieces = clusters.flatMap((c, ci) => c.items.map((l, k) => {
-  const n = nodes.find(x => x.l === l)!
+  const n = byId(l)
   const primary = !seen.has(l)
   seen.add(l)
   const j = ci * 10 + k
-  return { key: `${ci}-${l}`, n, primary, tone: c.tone, cx: boxX(ci) + CW / 2 + (rnd(j, 7) - 0.5) * 34, cy: 72 + k * 34, cr: (rnd(j, 8) - 0.5) * 14 }
+  return { key: `${ci}-${l}`, n, primary, tone: c.tone, cx: boxX(ci) + CW / 2 + (rnd(j, 7) - 0.5) * 26, cy: 72 + k * 40, cr: (rnd(j, 8) - 0.5) * 14 }
 }))
 // concepts no silo picked up stay on the floor
 const orphans = nodes.filter(n => !pieces.some(p => p.n.i === n.i))
@@ -72,11 +84,11 @@ function place(p: { n: typeof nodes[number], cx?: number, cy?: number, cr?: numb
   if (s.value === 2) return `translate(${p.n.sx}px, ${H + 40}px) rotate(${p.n.sr}deg)`
   return `translate(${p.n.x}px, ${p.n.y}px) rotate(0deg)`
 }
-const pw = (l: string) => l.length * 6.4 + 18
+const pw = (l: string) => l.length * 6 + 18
 const captions = [
   ['The railway is the most fantastic domain there is.', 'No other industry packs this many distinct concepts and niche specialities into one system.'],
   ['Then computers came along.', 'We took this beautiful, complete model, dropped it on the floor, and it broke into a million pieces.'],
-  ['We picked up the pieces that suited us…', '…glued them together our own way, and called them “use cases”. Count the tracks.'],
+  ['We picked up the pieces that suited us…', '…glued them together our own way, and called them “use cases”. Count the track segments.'],
   ['DIM restores the complete picture.', 'One model of the railway, every concept in its place, every use case a view on it.'],
 ]
 </script>
@@ -100,6 +112,8 @@ const captions = [
       <!-- the web of relations -->
       <line v-for="([a, b], k) in edges" :key="k" :x1="nodes[a].x" :y1="nodes[a].y" :x2="nodes[b].x" :y2="nodes[b].y"
         class="edge" :class="{ gone: s === 1 || s === 2, back: s === 3 }" :style="{ transitionDelay: s === 3 ? `${600 + rnd(k, 9) * 600}ms` : `${rnd(k, 9) * 200}ms` }" />
+      <text v-for="([a, b, l], k) in edges" :key="`l${k}`" :x="(nodes[a].x + nodes[b].x) / 2" :y="(nodes[a].y + nodes[b].y) / 2 - 3"
+        text-anchor="middle" class="elab" :class="{ gone: s === 1 || s === 2 }" :style="{ transitionDelay: s === 3 ? '1.2s' : '0s' }">{{ l }}</text>
 
       <!-- the silos -->
       <g v-for="(c, ci) in clusters" :key="c.name" class="silo" :class="{ on: s === 2 }" :style="{ transitionDelay: `${ci * 90}ms` }">
@@ -118,13 +132,13 @@ const captions = [
       <g v-for="p in pieces" :key="p.key" class="piece" :class="{ copy: !p.primary, show: p.primary || s === 2 }"
         :style="{ transform: place(p), transitionDelay: `${rnd(p.n.i, 10) * 250}ms` }">
         <rect :x="-pw(p.n.l) / 2" y="-11" :width="pw(p.n.l)" height="22" rx="11" class="pill"
-          :style="s === 2 ? { stroke: p.tone, fill: 'rgba(11,12,28,.95)' } : {}" :class="{ track: p.n.l === 'Track' && s === 2 }" />
+          :style="s === 2 ? { stroke: p.tone, fill: 'rgba(11,12,28,.95)' } : {}" :class="{ track: p.n.l === 'Track segment' && s === 2 }" />
         <text y="4" text-anchor="middle" class="pl">{{ p.n.l }}</text>
       </g>
 
       <g class="dim" :class="{ on: s === 3 }">
-        <rect :x="CX - 70" :y="CY - 24" width="140" height="48" rx="24" class="dim-pill" />
-        <text :x="CX" :y="CY + 9" text-anchor="middle" class="dim-t">DIM</text>
+        <rect :x="DX - 70" :y="DY - 24" width="140" height="48" rx="24" class="dim-pill" />
+        <text :x="DX" :y="DY + 9" text-anchor="middle" class="dim-t">DIM</text>
       </g>
     </svg>
   </div>
@@ -139,6 +153,8 @@ const captions = [
 .svg { width: 100%; height: 360px; display: block; overflow: visible; }
 .edge { stroke: #64C8FA; stroke-width: 1.1; opacity: .4; transition: opacity .5s ease; }
 .edge.gone { opacity: 0; }
+.elab { font-size: 8.5px; fill: #A6A8C1; opacity: .9; transition: opacity .5s ease; paint-order: stroke; stroke: #0A0B1A; stroke-width: 3px; }
+.elab.gone { opacity: 0; }
 .edge.back { opacity: .75; stroke: #B494DB; stroke-width: 1.4; }
 .piece { transition: transform 1.1s cubic-bezier(.5, .05, .2, 1), opacity .5s ease; }
 .piece.copy { opacity: 0; }
@@ -154,7 +170,7 @@ const captions = [
 .glue { stroke-width: 3; stroke-dasharray: 2 3; opacity: .7; }
 .halo { opacity: 0; transition: opacity 1s ease 1s; }
 .halo.on { opacity: 1; }
-.dim { opacity: 0; transform: scale(.4); transform-origin: 470px 186px; transition: all .6s cubic-bezier(.3, 1.6, .5, 1); }
+.dim { opacity: 0; transform: scale(.4); transform-origin: 852px 322px; transition: all .6s cubic-bezier(.3, 1.6, .5, 1); }
 .dim.on { opacity: 1; transform: none; transition-delay: 1.3s; }
 .dim-pill { fill: #1E2869; stroke: #64C8FA; stroke-width: 2.5; filter: drop-shadow(0 0 16px rgba(100, 200, 250, .7)); }
 .dim-t { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 24px; fill: #fff; }
