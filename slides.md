@@ -639,12 +639,14 @@ That's the message I want you to take home: describe the source first, then tran
 CONSTRUCT {
   ?version a trase:Plattformkant ;
     ?property ?value .
-} WHERE {
+} 
+WHERE {
   SERVICE <x-sparql-anything:location=
       plattformkant.csv,csv.headers=true> {
     ?row xyz:property_oid ?oid ;
       ?column ?value .
   }
+  
   BIND(fx:entity(trase:, ?oid) AS ?version)
   BIND(fx:entity(trase:, STRAFTER(
       STR(?column), STR(xyz:))) AS ?property)
