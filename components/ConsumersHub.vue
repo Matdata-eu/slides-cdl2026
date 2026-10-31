@@ -10,8 +10,8 @@ import { useIsSlideActive, useNav } from '@slidev/client'
 const consumers = [
   { k: 'ERTMS / ETCS', t: 'Starting point to engineer <b>ETCS</b> on every line.', x: 0, y: 8, tone: 'sky' },
   { k: 'Traffic planners', t: '<b>Run-time calculation</b> and <b>timetable simulation</b> on the modelled network.', x: 640, y: 8, tone: 'amber' },
-  { k: 'RINF · EU register', t: 'Generated from the graph. First submission at <b>micro, topology level</b>.', x: 0, y: 214, tone: 'green' },
-  { k: 'Railway undertakings', t: '<b>Platform lengths</b>: which trains fit, where passengers should board.', x: 640, y: 214, tone: 'purple' },
+  { k: 'RINF · EU register', t: 'Generated straight from the graph, at <b>micro, topology level</b>.', x: 0, y: 214, tone: 'green' },
+  { k: 'Train operators', t: '<b>Platform lengths</b>: which trains fit, where passengers should board.', x: 640, y: 214, tone: 'purple' },
   { k: 'Traffic management & timetabling', t: 'Next: DIM replaces the old supply of infrastructure data.', x: 320, y: 262, tone: 'next' },
 ]
 const HX = 450, HY = 150

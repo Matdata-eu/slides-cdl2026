@@ -12,7 +12,7 @@ const steps = [
   { name: 'Proof of concept', sub: '“It can be done”' },
   { name: 'Pilot', sub: 'One team, one use case' },
   { name: 'Production', sub: 'Others depend on it' },
-  { name: 'Foundation', sub: 'The base for traffic systems' },
+  { name: 'Foundation', sub: 'Other systems are built on it' },
 ]
 const facts = [
   { k: 'ERTMS', t: 'The ETCS roll-out <b>starts from DIM</b> to engineer every line.' },

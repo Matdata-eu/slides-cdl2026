@@ -34,15 +34,14 @@ const MAX = 105
       <div class="flow">
         <div class="chip">Complete KG</div>
         <div class="arrow flow" />
-        <div class="chip ok">Oxigraph<small>whole network in memory, loaded in 36 s</small></div>
+        <div class="chip ok">Oxigraph<small>whole network in memory, 9.5 GB peak</small></div>
         <div class="arrow flow" />
         <div class="chip ok">Scope = area location<small>a subnetwork, or any area you draw</small></div>
         <div class="arrow flow" />
         <div class="chip ok">railML 3.2 + 3.3</div>
       </div>
       <TimeBars v-if="after" :rows="[
-        { label: 'Load into Oxigraph', min: 0.6, tone: 'green', time: '36 s' },
-        { label: 'railML, complete network', min: 4.6, tone: 'green', note: 'both versions' },
+        { label: 'railML, complete network', min: 8.3, tone: 'green', note: 'loading included' },
       ]" :max="MAX" />
       <div class="saved" :class="{ on: after }">≈ 1.5 h saved on every run</div>
     </div>
