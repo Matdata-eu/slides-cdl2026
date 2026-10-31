@@ -38,7 +38,7 @@ drawings:
 
 <div class="mt-8 opacity-90 text-sm">
 Mathias Vanden Auweele · Matdata<br>
-with the Bane NOR Digital Infrastructure Model
+for Bane NOR's Digital Infrastructure Model (DIM)
 </div>
 
 </div>
@@ -50,8 +50,22 @@ with the Bane NOR Digital Infrastructure Model
 -->
 
 ---
-layout: two-cols-header
 station: Start
+---
+
+<ShatteredRailway :step="$clicks" />
+
+<div v-click="3" />
+
+<!--
+[1:30] I believe the railway is the most fantastic environment there is. I don't know any other industry that covers this many distinct concepts and niche specialities in one system: track, switches, signalling, ETCS, catenary and substations, bridges and tunnels, timetables, rolling stock, possessions, work orders. And they are all connected.
+(click) Then computers came along. And we took this beautiful, complete model, dropped it on the floor, and it broke into a million pieces.
+(click) We picked up the pieces that suited us, glued them together in our own vision, and called them use cases. Maintenance, timetabling, finance, energy, projects. Look at how many of them carry their own copy of the track, each a little different. Sometimes so different you'd think they describe different railways. And a change in one never reaches the others.
+(click) The DIM project is about restoring the complete picture: one model of the railway, as a knowledge graph, where every use case is a view on the same reality.
+-->
+
+---
+layout: two-cols-header
 ---
 
 # Who is behind this?
@@ -67,19 +81,9 @@ station: Start
 
 A **one-person data consultancy** for semantic mapping and knowledge graphs in rail.
 
-- Working with **ERA**, **Bane NOR** and **Certifer**
+- Working with **ERA**, **Bane NOR**, **Certifer** and other partners
 - railML, RTM / RSM, OpenTNF and vendor topology models
 - <b>Role here:</b> semantic modelling and pipeline partner
-
-<div class="logos">
-  <img src="/assets/era.svg" style="height:1.5rem" alt="ERA" />
-  <img src="/assets/certifer.jpg" style="height:1.1rem" alt="Certifer" />
-  <img src="/assets/Infrabel_logo.svg" style="height:1.1rem" alt="Infrabel" />
-  <span style="display:inline-flex;align-items:center;gap:.3rem;color:#1d3b2a;font-weight:700;font-size:.8rem"><img src="/assets/datatreehouse.svg" style="height:1.1rem" alt="" />Datatreehouse</span>
-  <img src="/assets/Kapernikov_logo_horiz.png" style="height:1.1rem" alt="Kapernikov" />
-  <img src="/assets/cropped-cognizone_logo-2048x529.png" style="height:1.1rem" alt="Cognizone" />
-  <img src="/assets/liw-member-5081.png" style="height:1.1rem" alt="Transurb" />
-</div>
 
 </div>
 
@@ -94,54 +98,12 @@ Norway's **national railway infrastructure manager**.
 - **5,000+ km** of track, signals, switches, bridges, tunnels, catenary
 - Builds, maintains, renews and **plans decades ahead**
 - Owner of the **Digital Infrastructure Model (DIM)**, the graph in this talk
+- DIM team: on average **about four people** since early 2025
 
 </div>
 
-<style>
-.logos { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.2rem; margin-top: .9rem; padding: .6rem .8rem; background: #fff; border-radius: 10px; }
-</style>
-
 <!--
-[0:40] Two organisations. Matdata brings the semantic web know-how; I'm a one-person consultancy working for ERA, Bane NOR and others. Bane NOR owns the railway, the data and the regulatory obligations. Everything you'll see is their production system, the DIM.
--->
-
----
-
-# Open-source tools that grew out of this work
-
-<div class="grid grid-cols-3 gap-3 mt-2">
-<div class="oss glass"><b>MatGUI + Yasgui plugins</b><span>matgui.matdata.eu</span><p>SPARQL workbench with table, graph, map, chart and explain plugins.</p></div>
-<div class="oss glass"><b>SHACL Report</b><span>shacl-report.matdata.eu</span><p>Readable validation reports, and the coverage of your shapes.</p></div>
-<div class="oss glass"><b>RDF Rules Playground</b><span>rdf-rules-playground.matdata.eu</span><p>Run SHACL-AF rules in the browser; see which rule inferred each triple.</p></div>
-<div class="oss glass"><b>RINF Atlas</b><span>rinf-atlas.matdata.eu</span><p>Map and faceted search over the EU infrastructure register.</p></div>
-<div class="oss glass"><b>SPARQL Guard</b><span>sparql-guard</span><p>Access control for any SPARQL endpoint, policies in SHACL.</p></div>
-<div class="oss glass"><b>RDF Compare · Explorers</b><span>rdf-compare · ontology-explorer</span><p>Diff two RDF files; ontologies and shapes as diagrams.</p></div>
-</div>
-
-<div class="mt-4 text-sm muted">All on <b>github.com/Matdata-eu</b>, most of them running in the browser.</div>
-
-<style>
-.oss { padding: 10px 12px; border-top: 3px solid var(--c-sky); }
-.oss b { display: block; font-size: 14px; color: #fff; }
-.oss span { font-family: ui-monospace, monospace; font-size: 10.5px; color: var(--c-sky); }
-.oss p { font-size: 12px; line-height: 1.35; margin: 4px 0 0; color: var(--c-ink-mod); }
-</style>
-
-<!--
-[0:25] A quick word on tools: many open-source tools came out of this project, a SPARQL workbench, a SHACL report viewer, a rules playground, RINF Atlas, and more. All on GitHub. Now, the railway.
--->
-
----
-
-<ShatteredRailway :step="$clicks" />
-
-<div v-click="3" />
-
-<!--
-[1:30] I believe the railway is the most fantastic environment there is. I don't know any other industry that covers this many distinct concepts and niche specialities in one system: track, switches, signalling, ETCS, catenary and substations, bridges and tunnels, timetables, rolling stock, possessions, work orders. And they are all connected.
-(click) Then computers came along. And we took this beautiful, complete model, dropped it on the floor, and it broke into a million pieces.
-(click) We picked up the pieces that suited us, glued them together in our own vision, and called them use cases. Maintenance, timetabling, ERTMS, energy, projects. Look at how many of them carry their own copy of the track, each a little different. Sometimes so different you'd think they describe different railways. And a change in one never reaches the others.
-(click) The DIM project is about restoring the complete picture: one model of the railway, as a knowledge graph, where every use case is a view on the same reality.
+[0:40] Who am I to tell you this? Two organisations. Matdata brings the semantic web know-how; I'm a one-person consultancy working for ERA, Bane NOR and others. Bane NOR owns the railway, the data and the regulatory obligations. Everything you'll see is their production system, the DIM, built by a team of about four people on average since early 2025. That is small for what it does, and it is part of the story.
 -->
 
 ---
@@ -180,7 +142,7 @@ And next, DIM stops being only a copy built from the sources: it becomes the mas
 <div class="col-span-2 text-sm leading-relaxed">
 
 - An **EU obligation**: every infrastructure manager publishes its network to the **Register of Infrastructure**, run by the EU Agency for Railways (ERA).
-- Railway undertakings use it to check **whether a train fits a route** before it runs: gauge, electrification, platform length, train protection, …
+- Train operators (railway undertakings) use it to check **whether a train fits a route** before it runs: gauge, electrification, platform length, train protection, …
 - ERA also publishes it as **linked data**, with the ERA ontology.
 
 <div v-click class="glass p-3 mt-4 glow-sky">
@@ -206,7 +168,7 @@ Norway sent the <b class="hl-sky">first micro-level submission</b>, generated st
 </style>
 
 <!--
-[1:15] A word on RINF, because it matters for the business case. It's the EU Register of Infrastructure. Every infrastructure manager in Europe must publish its network there, and railway undertakings use it to check whether a train can run on a route: the gauge, the electrification, platform lengths, the train protection system.
+[1:15] A word on RINF, because it matters for the business case. It's the EU Register of Infrastructure. Every infrastructure manager in Europe must publish its network there, and train operators use it to check whether a train can run on a route: the gauge, the electrification, platform lengths, the train protection system.
 Most countries report at macro level: operational points, so stations, connected by sections of line.
 (click) Norway went further. Because DIM is a topology, we could send the first ever submission at micro level: real tracks, switches, signals and platforms, positioned on the network. And it's not a parallel dataset that drifts: it is generated from the graph.
 -->
@@ -218,7 +180,7 @@ Most countries report at macro level: operational points, so stations, connected
 <ConsumersHub />
 
 <!--
-[1:00] So who depends on it? ERTMS, for ETCS engineering. Strategic traffic planners: run-time calculations and timetable simulation on the network as it is modelled in DIM. RINF, the EU register. Railway undertakings: platform lengths, so they know which trains fit and can tell passengers where to board.
+[1:00] So who depends on it? ERTMS, for ETCS engineering. Strategic traffic planners: run-time calculations and timetable simulation on the network as it is modelled in DIM. RINF, the EU register, generated straight from the graph. Train operators: platform lengths, so they know which trains fit and can tell passengers where to board.
 And the big one coming: traffic management and timetabling will get their infrastructure data from DIM.
 -->
 
@@ -260,7 +222,7 @@ station: Value
 <ValueTour />
 
 <!--
-[0:20] So what does a knowledge graph give the business? Eight stops on this line, all running on the same graph: the portal, key figures, the RINF status, the search builder, the data catalog, the TPS mapping, the validation portal and the REST API.
+[0:15] So what does a knowledge graph give the business? Six stops on this line, all running on the same graph: the portal, key figures, the search builder, the TPS mapping, the validation portal and the REST API.
 -->
 
 ---
@@ -287,16 +249,6 @@ layout: full
 layout: full
 ---
 
-<Clip full src="/assets/03-rinf-status-report.gif" caption="RINF status report · which RINF parameters we fill, and which are still missing" />
-
-<!--
-[0:20] The RINF status report: for every RINF parameter, whether we already fill it from the graph, or it's still missing.
--->
-
----
-layout: full
----
-
 <Clip full src="/assets/04-sparnatural-search.gif" caption="Search builder on Sparnatural: point-and-click SPARQL" />
 
 <!--
@@ -307,20 +259,10 @@ layout: full
 layout: full
 ---
 
-<Clip full src="/assets/05-data-catalog.gif" caption="Data catalog of what each dataset contains" />
+<Clip full src="/assets/06-tps-mapping.gif" caption="TPS mapping · the DIM topology linked to the timetable-planning topology, both maps in sync" />
 
 <!--
-[0:20] The data catalog documents what each dataset contains and where it comes from.
--->
-
----
-layout: full
----
-
-<Clip full src="/assets/06-tps-mapping.gif" caption="TPS mapping · DIM netelements linked to the timetable-planning topology, both maps in sync" />
-
-<!--
-[0:25] Linking to other systems: the topology of the timetable-planning system mapped onto ours. Hover a net element on our map and its counterpart lights up in their schematic.
+[0:25] Linking to other systems: the topology of TPS, the timetable-planning system, mapped onto ours. Hover a piece of track on our map and its counterpart lights up in their schematic.
 -->
 
 ---
@@ -357,7 +299,8 @@ layout: full
 </div>
 
 <!--
-[0:50] Most developers don't want SPARQL. So we offer a conventional REST API with Swagger. (click) The responses are JSON-LD, (click) built from the knowledge graph with a bit of indexing so it is fast. (click) People work with the graph the way they're used to, and the data stays linked.
+[0:50] Most developers don't want SPARQL. (click) So we offer a conventional REST API with Swagger. (click) The responses are JSON-LD, (click) built from the knowledge graph with a bit of indexing so it is fast. (click) People work with the graph the way they're used to, and the data stays linked.
+That is why people use it. Now: how do you build something like this?
 -->
 
 ---
@@ -379,7 +322,7 @@ station: Topology
 
 <HierarchyVsTopology :step="$clicks" />
 
-<div v-click="1" />
+<div v-click="1" class="text-center text-sm mt-1 hl-sky"><b>Geometry lies; topology doesn't.</b></div>
 
 <!--
 [1:30] Many asset databases, built on SAP or Maximo, but also RDS and the old railML 2 versions, model the railway as a hierarchy: a line has stations, a station has tracks, a track has switches and signals. That's great for maintenance work orders.
@@ -433,7 +376,7 @@ bnd:_inference_netentity_inOperationalPoint
 
 <div class="col-span-2 text-sm">
 
-**In which station is this signal?** In RailTopoModel that is a **5–6 hop** path.
+**In which station is this signal?** In RailTopoModel that is a **five-hop** path.
 
 <div class="glass p-3 mt-3" style="border-top:3px solid var(--c-purple)">
 SHACL rules turn the topology into <b class="hl-purple">one-hop shortcuts</b>:<br>
@@ -461,8 +404,10 @@ station: Mapping
 
 # How we built it,<br>and what went wrong
 
+<div class="mt-4 text-sm muted">our own mistakes · gaps in the standards · gaps in the engines</div>
+
 <!--
-[0:05] Now the honest part: how we built it.
+[0:15] Now the honest part: how we built it. What went wrong falls in three bins: mistakes we made ourselves, gaps in the standards, and gaps in the engines. I'll tell you which is which.
 -->
 
 ---
@@ -474,13 +419,13 @@ station: Mapping
 </div>
 
 <div class="grid grid-cols-3 gap-4 mt-10 text-sm">
-<div class="glass p-4">No R2RML, RML or custom code: a mapping <b>is</b> a SPARQL <code>CONSTRUCT</code>.</div>
+<div class="glass p-4">No separate mapping language or custom code: a mapping <b>is</b> a SPARQL <code>CONSTRUCT</code>.</div>
 <div class="glass p-4">Façade-X gives one lens over CSV, XML, JSON, spreadsheets and more.</div>
 <div class="glass p-4">Written and tested in the same query editor the team already uses.</div>
 </div>
 
 <!--
-[0:40] We chose SPARQL Anything because the team was new to knowledge graphs. They had to learn SPARQL to query the graph anyway, so why learn R2RML or RML on top? One language for mapping and querying. The tool was never the problem. How we used it was.
+[0:40] We chose SPARQL Anything because the team was new to knowledge graphs. They had to learn SPARQL to query the graph anyway, so why learn R2RML or RML on top? One language for mapping and querying. And the mapping tool did its job. The first big mistake was ours: how we used it.
 -->
 
 ---
@@ -559,9 +504,9 @@ overpass: true
 
 <!--
 [1:30] Here's what grew around that simple CONSTRUCT. The source is a GeoPackage, plus XML and JSON. SPARQL Anything doesn't read databases, so a Source Ingestor prepares the files.
-(click) Data quality issues take months to fix at the source, so we patch them in SQL: about a hundred patches, and they must run before anything else reads the data.
-(click) Then geometry. GeoSPARQL is geometry-centric: no linear referencing, no routing, not even a function to get the X coordinate. And engines don't implement the full spec. So spatial logic went into SQL views and six Python steps working on the graph.
-(click) And because mappings span files, 61 post-processing UPDATEs run in a fixed order, deleting and rewriting each other. That is an imperative program written in SPARQL. Nobody can tell you which rule produced which triple.
+(click) Data quality issues take months to fix at the source: the people who own the data have other priorities, and that is normal in a large organisation. So we patch them in SQL: about a hundred patches, and they must run before anything else reads the data.
+(click) Then geometry. This one is a gap in the standard: GeoSPARQL is geometry-centric, with no linear referencing, no routing, not even a function to get the X coordinate. And a gap in the engines: they don't implement the full spec. So spatial logic went into SQL views and six Python steps working on the graph.
+(click) And because mappings span files, 61 post-processing UPDATEs run in a fixed order, deleting and rewriting each other. That is an imperative program written in SPARQL. Nobody can tell you which rule produced which triple. And that one is our own mistake, not the stack's.
 -->
 
 ---
@@ -579,10 +524,10 @@ overpass: true
   { label: 'Splitting', min: 90, tone: 'red', note: '15 sequential queries' },
   { label: 'railML generation', min: 15, tone: 'purple' },
   { label: 'RINF, SHACL rules in maplib', min: 10, tone: 'green' },
-  { label: 'RINF, same rules in TopBraid', min: 120, tone: 'red' },
+  { label: 'RINF, same rules, free and open engine', min: 120, tone: 'red' },
 ]" :stagger="300" />
 
-<div class="text-xs muted mt-2">Full production run, one worker (1–4 vCPU, 28–32 GiB). The two RINF rows are alternatives.</div>
+<div class="text-xs muted mt-2">Full production run on one worker. The two RINF rows are alternatives.</div>
 
 </div>
 
@@ -595,7 +540,7 @@ overpass: true
 </div>
 
 <!--
-[0:50] What does it cost? The mapping itself takes ten minutes. It's not the problem. The fix-up layers are: post-processing and splitting take over two hours. And the engine matters: the same SHACL rule set runs in 10 minutes in maplib versus 2 hours in TopBraid. An order of magnitude, just by choosing the engine.
+[0:50] What does it cost? The mapping itself takes ten minutes. It's not the problem. The fix-up layers are: post-processing and splitting take over two hours. And the engine matters: the same SHACL rule set runs in 10 minutes in maplib versus 2 hours in a free and open engine, both without tuning. An order of magnitude, just by choosing the engine.
 -->
 
 ---
@@ -706,7 +651,7 @@ On the right the uplift. (click) A node shape targets the source class, a Trasé
 <!--
 [1:30] The second refactor is about looking at the whole pipeline instead of optimising one query.
 Before: we split the complete graph into one graph per subnetwork with 15 sequential queries, an hour and a half, and then generated railML per subnetwork with rdflib in memory, which ran out of memory on the big ones. And you could only get the subnetworks we had pre-defined.
-(click) After: no splitting. We load the complete knowledge graph into Oxigraph, an efficient SPARQL engine, in memory, in 36 seconds. An area location defines the scope: a predefined subnetwork, or any area. Both railML versions for the complete network take under five minutes. We save about an hour and a half on every run.
+(click) After: no splitting. We load the complete knowledge graph into Oxigraph, an efficient SPARQL engine, in memory. An area location defines the scope: a predefined subnetwork, or any area. railML for the complete network takes about eight minutes, loading included, with a peak of 9.5 gigabytes. We save about an hour and a half on every run.
 -->
 
 ---
@@ -735,7 +680,7 @@ Before: we split the complete graph into one graph per subnetwork with 15 sequen
 </div>
 
 <!--
-[1:00] And there's a bonus. Because the generator no longer depends on pre-processing, it became an independent library. Give it a knowledge graph and an area location, and you get railML.
+[1:00] And there's a bonus. (click) Because the generator no longer depends on pre-processing, it became an independent library. (click) Give it a knowledge graph and an area location, and you get railML.
 (click) Airflow is just one caller. You can draw on the map the area you need, and get exactly that area as a railML file. A project team can get the railML for their construction site without waiting for anyone.
 (click) We checked the output line by line against the old generator before we switched.
 -->
@@ -757,24 +702,26 @@ station: Q&A
 
 <div class="mt-5 flex justify-center gap-10">
   <div class="text-center">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fcdl2026.matdata.eu%2F" alt="QR code for these slides" class="w-20 h-20 rounded bg-white p-1" />
+    <img src="/assets/qr/slides.svg" alt="QR code for these slides" class="w-20 h-20 rounded bg-white p-1" />
     <div class="mt-1 text-xs opacity-80">Slides</div>
   </div>
   <div class="text-center">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fgithub.com%2FMatdata-eu%2Fpaper-sem4tra2026" alt="QR code for the Sem4Tra paper" class="w-20 h-20 rounded bg-white p-1" />
+    <img src="/assets/qr/paper.svg" alt="QR code for the Sem4Tra paper" class="w-20 h-20 rounded bg-white p-1" />
     <div class="mt-1 text-xs opacity-80">Paper</div>
   </div>
   <div class="text-center">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fdim.apps.banenor.no%2F" alt="QR code for the DIM portal" class="w-20 h-20 rounded bg-white p-1" />
+    <img src="/assets/qr/dim-portal.svg" alt="QR code for the DIM portal" class="w-20 h-20 rounded bg-white p-1" />
     <div class="mt-1 text-xs opacity-80">DIM portal</div>
   </div>
   <div class="text-center">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Frinf-atlas.matdata.eu%2F" alt="QR code for RINF Atlas" class="w-20 h-20 rounded bg-white p-1" />
+    <img src="/assets/qr/rinf-atlas.svg" alt="QR code for RINF Atlas" class="w-20 h-20 rounded bg-white p-1" />
     <div class="mt-1 text-xs opacity-80">RINF Atlas</div>
   </div>
 </div>
 
-<div class="mt-4 text-sm opacity-80">Mathias Vanden Auweele · mathias@matdata.eu</div>
+<div class="mt-3 text-xs muted">Open-source tools from this work, from a SPARQL workbench to RINF Atlas: <b>github.com/Matdata-eu</b></div>
+
+<div class="mt-2 text-sm opacity-80">Mathias Vanden Auweele · mathias@matdata.eu</div>
 
 <style>
 .tkw { padding: 7px 14px; font-size: 1.02rem; line-height: 1.35; }
@@ -788,5 +735,33 @@ station: Q&A
 (click) Topology first: get the model right; a hierarchy can't tell you where a train can go.
 (click) Lift the source first, in its own language, then uplift with rules.
 (click) And optimise the system, not the query: removing the splitting saved more than any query tuning ever did. And one wish for the community: linear referencing in GeoSPARQL.
-Slides, paper, the portal and RINF Atlas are behind these codes. Thank you; I'm happy to take questions.
+Slides, paper, the portal and RINF Atlas are behind these codes. The open-source tools that came out of this work are on GitHub, and on the last slide of the published deck. Thank you; I'm happy to take questions.
+-->
+
+---
+
+<div class="kicker">Backup</div>
+
+# Open-source tools that grew out of this work
+
+<div class="grid grid-cols-3 gap-3 mt-2">
+<div class="oss glass"><b>MatGUI + Yasgui plugins</b><span>matgui.matdata.eu</span><p>SPARQL workbench with table, graph, map, chart and explain plugins.</p></div>
+<div class="oss glass"><b>SHACL Report</b><span>shacl-report.matdata.eu</span><p>Readable validation reports, and the coverage of your shapes.</p></div>
+<div class="oss glass"><b>RDF Rules Playground</b><span>rdf-rules-playground.matdata.eu</span><p>Run SHACL-AF rules in the browser; see which rule inferred each triple.</p></div>
+<div class="oss glass"><b>RINF Atlas</b><span>rinf-atlas.matdata.eu</span><p>Map and faceted search over the EU infrastructure register.</p></div>
+<div class="oss glass"><b>SPARQL Guard</b><span>sparql-guard</span><p>Access control for any SPARQL endpoint, policies in SHACL.</p></div>
+<div class="oss glass"><b>RDF Compare · Explorers</b><span>rdf-compare · ontology-explorer</span><p>Diff two RDF files; ontologies and shapes as diagrams.</p></div>
+</div>
+
+<div class="mt-4 text-sm muted">All on <b>github.com/Matdata-eu</b>, most of them running in the browser.</div>
+
+<style>
+.oss { padding: 10px 12px; border-top: 3px solid var(--c-sky); }
+.oss b { display: block; font-size: 14px; color: #fff; }
+.oss span { font-family: ui-monospace, monospace; font-size: 10.5px; color: var(--c-sky); }
+.oss p { font-size: 12px; line-height: 1.35; margin: 4px 0 0; color: var(--c-ink-mod); }
+</style>
+
+<!--
+Backup slide, not presented. It is in the published slides and the PDF: the open-source tools that came out of this project, all on GitHub.
 -->
