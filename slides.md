@@ -558,64 +558,102 @@ station: Pipeline
 
 ---
 
+# Lift first, in the language of the source
+
+<LiftUplift :step="$clicks" />
+
+<div v-click="1" />
+
+<!--
+[1:40] Before: one CONSTRUCT per file went straight from the source into railML and RTM, 63 percent copy-paste, and then 61 ordered updates to fix it up.
+(click) After: two steps. First we lift every source mechanically into RDF, in its own namespace: trase for the Trasé network database, dimdb for the DIM database. One generic query per table: every column becomes a property. No interpretation, nothing lost, nothing guessed. The graph speaks the source's language first, with the source's concepts.
+Then the uplift: SHACL shapes that target a source class. They validate the source data, and they carry the rule that builds the DIM entity. Shared logic like validity and designators sits in one common shape instead of in 45 files. And every DIM entity says which source version it was derived from.
+That's the message I want you to take home: describe the source first, then transform with rules.
+-->
+
+---
+
+# Lift every table, uplift every concept
+
+<div class="grid grid-cols-2 gap-5 small-code">
+
+<div>
+<div class="kicker mb-1">Lift · mechanical</div>
+
+```sparql
+CONSTRUCT {
+  ?version a trase:Plattformkant ;
+    ?property ?value .
+} 
+WHERE {
+  SERVICE <x-sparql-anything:location=
+      plattformkant.csv,csv.headers=true> {
+    ?row xyz:property_oid ?oid ;
+      ?column ?value .
+  }
+  
+  BIND(fx:entity(trase:, ?oid) AS ?version)
+  BIND(fx:entity(trase:, STRAFTER(
+      STR(?column), STR(xyz:))) AS ?property)
+}
+```
+
+</div>
+
+<div>
+<div class="kicker mb-1">Uplift · a SHACL shape with a rule</div>
+
+```turtle {all|1-4|6-10|12-25}
+bnd:_upliftShape_trase_Plattformkant a sh:NodeShape ;
+  sh:targetClass trase:Plattformkant ;
+  sh:property bnd:_upliftShape_trase_Plattformkant_lengde ;
+  sh:rule bnd:_uplift_trase_Plattformkant_lengde .
+
+bnd:_upliftShape_trase_Plattformkant_lengde
+  a sh:PropertyShape ;
+  sh:path trase:lengde ;
+  sh:maxCount 1 ;
+  sh:pattern "^[0-9]+(\\.[0-9]+)?$" .
+
+bnd:_uplift_trase_Plattformkant_lengde a sh:SPARQLRule ;
+  sh:construct """CONSTRUCT {
+      ?edge railml3:hasLength ?length ;
+        prov:wasDerivedFrom $this .
+      ?length qudt:numericValue ?value ;
+        qudt:hasUnit unit:M .
+    } WHERE {
+      $this trase:lengde ?lengde .
+      BIND(STRAFTER(STR($this), STR(trase:)) AS ?oid)
+      BIND(IRI(CONCAT(STR(bnd:), "_platform_edge_", ?oid)) AS ?edge)
+      BIND(IRI(CONCAT(STR(bnd:), "_length_", ?oid)) AS ?length)
+      BIND(STRDT(?lengde, xsd:decimal) AS ?value)
+    }""" .
+```
+
+</div>
+
+</div>
+
+
+<!--
+[1:00] What it looks like. On the left the lift: the same query shape for every table. Every row becomes a trase entity, every column a trase property. No railML anywhere.
+On the right the uplift. (click) A node shape targets the source class, a Trasé platform edge. (click) A property shape validates the source: at most one length, and it must be a number. (click) And the rule turns that length into the railML length of the platform edge, with prov:wasDerivedFrom pointing back to the source entity. The body is still SPARQL, so the team didn't have to learn a new language.
+-->
+
+---
+
 # SHACL in DIM: one shape, many readers
 
 <ShapeReaders :step="$clicks" />
 
 <div v-click="1" />
 
-<div class="mt-3 text-sm text-center muted">The same language also builds the graph: <b class="hl-purple">SHACL rules</b> turn the sources into DIM and produce the RINF export.</div>
+<div class="mt-3 text-sm text-center muted">Shapes also carry the rules: <b class="hl-purple">the uplift you just saw</b>, the topology shortcuts and the RINF export.</div>
 
 <!--
-[1:40] SHACL does more in DIM than validation. Before: validation and search each had their own shapes, four shape sets in two repositories. They described the same tracks and signals, and they drifted: 17 properties under two names, and 4 real conflicts.
+[1:40] And SHACL does more in DIM than validation and rules. Before: validation and search each had their own shapes, four shape sets in two repositories. They described the same tracks and signals, and they drifted: 17 properties under two names, and 4 real conflicts.
 (click) After: one shape per property, in one repository, and every reader takes what it needs from it. Validation checks the data against it: this track has a type that isn't allowed. Search builds its query form from the name and the list of values. The web page uses the name as the label. The map turns the list into a filter. And the REST API takes its field name and filter parameter from it.
 So adding a property is one change: on the next build it's checked, searchable, on the page, on the map and in the API. Model it once, for every reader.
-And the same language also builds the graph: SHACL rules turn the sources into DIM, and produce the RINF export we saw earlier.
--->
-
----
-
-# railML generation: stop splitting, start scoping
-
-<RailmlBeforeAfter :step="$clicks" />
-
-<div v-click="1" />
-
-<!--
-[1:30] The second refactor is about looking at the whole pipeline instead of optimising one query.
-Before: we split the complete graph into one graph per subnetwork with 15 sequential queries, an hour and a half, and then generated railML per subnetwork with rdflib in memory, which ran out of memory on the big ones. And you could only get the subnetworks we had pre-defined.
-(click) After: no splitting. We load the complete knowledge graph into Oxigraph, an efficient SPARQL engine, in memory. An area location defines the scope: a predefined subnetwork, or any area. railML for the complete network takes about eight minutes, loading included, with a peak of 9.5 gigabytes. We save about an hour and a half on every run.
--->
-
----
-
-# A library, not a pipeline step
-
-<div class="grid grid-cols-5 gap-6 mt-1">
-
-<div class="col-span-3">
-  <RailmlMap />
-</div>
-
-<div class="col-span-2 text-sm">
-
-<v-clicks>
-
-- The generator is now a **standalone Python library**: <code>rdf2railml</code>
-- No Airflow, no file-system assumptions: give it **a graph and an area**
-- Airflow is just one caller. A map where you **draw the area you need** is another
-- Checked line by line against the old generator before the switch
-
-</v-clicks>
-
-</div>
-
-</div>
-
-<!--
-[1:00] And there's a bonus. (click) Because the generator no longer depends on pre-processing, it became an independent library. (click) Give it a knowledge graph and an area location, and you get railML.
-(click) Airflow is just one caller. You can draw on the map the area you need, and get exactly that area as a railML file. A project team can get the railML for their construction site without waiting for anyone.
-(click) We checked the output line by line against the old generator before we switched.
 -->
 
 ---
@@ -629,7 +667,7 @@ station: Q&A
 <div class="mt-4 max-w-3xl mx-auto text-left text-lg leading-relaxed space-y-3">
 <div v-click class="tkw glass"><i class="num sky">1</i>A knowledge graph <b class="hl-sky">can run production systems</b>: DIM feeds ETCS, traffic planning and RINF.</div>
 <div v-click class="tkw glass"><i class="num amber">2</i><b class="hl-amber">Topology first.</b> A hierarchy of assets can't tell you where a train can go.</div>
-<div v-click class="tkw glass"><i class="num green">3</i><b class="hl-green">Model it once, in SHACL.</b> Validation, search, maps and the API read the same shape.</div>
+<div v-click class="tkw glass"><i class="num green">3</i><b class="hl-green">Lift the source first, then uplift with rules.</b> Don't map straight into your target.</div>
 <div v-click class="tkw glass"><i class="num purple">4</i><b class="hl-purple">Optimise the system, not the query.</b> And GeoSPARQL still needs linear referencing.</div>
 </div>
 
@@ -666,7 +704,7 @@ station: Q&A
 [1:15] Four things to take home.
 (click) A knowledge graph can run production systems: DIM feeds ETCS engineering, traffic planning and RINF.
 (click) Topology first: get the model right; a hierarchy can't tell you where a train can go.
-(click) Model it once, in SHACL: validation, search, the map and the API all read the same shape.
+(click) Lift the source first, in its own language, then uplift with rules.
 (click) And optimise the system, not the query: removing the splitting saved more than any query tuning ever did. And one wish for the community: linear referencing in GeoSPARQL.
 Slides, paper, the portal and RINF Atlas are behind these codes. The open-source tools that came out of this work are on GitHub, and on the last slide of the published deck. Thank you; I'm happy to take questions.
 -->
