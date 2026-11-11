@@ -9,6 +9,7 @@ const { isPrintMode } = useNav()
 const isActive = useIsSlideActive()
 const video = ref<HTMLVideoElement>()
 const isGif = computed(() => props.src.toLowerCase().endsWith('.gif'))
+const isImage = computed(() => /\.(png|jpe?g|webp|svg)$/i.test(props.src))
 
 let blob: Promise<Blob> | undefined
 const gifUrl = ref<string>()
@@ -39,6 +40,7 @@ watch([isActive, video], ([active, el]) => {
   <figure class="clip" :class="{ full }">
     <img v-if="isPrintMode && poster" :src="poster" alt="" />
     <img v-else-if="isGif" :src="gifUrl ?? src" alt="" />
+    <img v-else-if="isImage" :src="src" alt="" />
     <video v-else ref="video" :src="src" :poster="poster" loop muted playsinline preload="auto" />
     <figcaption v-if="caption">{{ caption }}</figcaption>
   </figure>

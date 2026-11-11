@@ -7,16 +7,18 @@ import { onUnmounted, ref, watch } from 'vue'
 import { useIsSlideActive, useNav } from '@slidev/client'
 
 const stops = [
-  { l: 'DIM portal', d: 'railML files, datasets', x: 200, y: 120 },
-  { l: 'Key figures', d: 'computed from the graph', x: 330, y: 220 },
-  { l: 'Search builder', d: 'point-and-click SPARQL', x: 460, y: 120 },
-  { l: 'TPS mapping', d: 'linked to timetable planning', x: 590, y: 220 },
-  { l: 'Validation portal', d: 'SHACL, every run', x: 720, y: 120 },
-  { l: 'REST API', d: 'JSON-LD for developers', x: 850, y: 220 },
+  { l: 'DIM portal', d: 'railML files, datasets', x: 165, y: 120 },
+  { l: 'Entity pages', d: 'every IRI resolves', x: 265, y: 220 },
+  { l: 'Key figures', d: 'computed from the graph', x: 365, y: 120 },
+  { l: 'Search builder', d: 'point-and-click SPARQL', x: 465, y: 220 },
+  { l: 'DIM Atlas', d: 'the graph on a map', x: 565, y: 120 },
+  { l: 'TPS mapping', d: 'linked to timetable planning', x: 665, y: 220 },
+  { l: 'Validation portal', d: 'SHACL, every run', x: 765, y: 120 },
+  { l: 'REST API', d: 'JSON-LD for developers', x: 855, y: 220 },
 ]
 const HUB = { x: 70, y: 170 }
 const path = `M ${HUB.x} ${HUB.y} ` + stops.map(p => `L ${p.x} ${p.y}`).join(' ')
-const tones = ['#64C8FA', '#2384EB', '#8D66BA', '#FE6263', '#FAC414', '#35DE6D']
+const tones = ['#64C8FA', '#4DD6E0', '#2384EB', '#8D66BA', '#EB518F', '#FE6263', '#FAC414', '#35DE6D']
 
 const { isPrintMode } = useNav()
 const isActive = useIsSlideActive()

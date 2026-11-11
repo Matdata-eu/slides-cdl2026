@@ -43,7 +43,17 @@ for Bane NOR's Digital Infrastructure Model (DIM)
 
 </div>
 
+<div class="cover-qr">
+  <img src="/assets/qr/slides.svg" alt="QR code for these slides" />
+  <div>Slides</div>
+</div>
+
 <CoverTrack />
+
+<style>
+.cover-qr { position: absolute; right: 48px; bottom: 64px; z-index: 6; text-align: center; color: #fff; font-size: 12px; opacity: .9; }
+.cover-qr img { width: 96px; height: 96px; background: #fff; padding: 4px; border-radius: 8px; margin-bottom: 4px; }
+</style>
 
 <!--
 [0:15] Hi, I'm Mathias. For the next half hour I'll take you on a train ride through a railway knowledge graph that runs in production in Norway: what it does for the business, what we got wrong building it, and how we fixed it.
@@ -189,7 +199,7 @@ And the big one coming: traffic management and timetabling will get their infras
 # What is inside
 
 <div class="grid grid-cols-4 gap-4 mt-6">
-  <div class="stat glass"><div class="n hl-sky"><CountUp :to="13" suffix="M" /></div><div class="l">triples</div></div>
+  <div class="stat glass"><div class="n hl-sky"><CountUp :to="19" suffix="M" /></div><div class="l">triples</div></div>
   <div class="stat glass"><div class="n hl-green"><CountUp :to="17" :delay="150" /></div><div class="l">ontologies</div></div>
   <div class="stat glass"><div class="n hl-amber"><CountUp :to="5000" :delay="300" suffix="+" /></div><div class="l">km of track</div></div>
   <div class="stat glass"><div class="n hl-purple"><CountUp :to="40" :delay="450" /></div><div class="l">asset types</div></div>
@@ -210,7 +220,7 @@ Outputs: railML 3.2 / 3.3 · SPARQL endpoint · JSON-LD REST API · RINF · data
 </style>
 
 <!--
-[0:45] The numbers: about 13 million triples, 17 ontologies, more than five thousand kilometres of track, about 40 asset types. And one property that will matter later: it is topology-first. Every signal, every balise is positioned on the network graph, not just as a point on a map.
+[0:45] The numbers: about 19 million triples, 17 ontologies, more than five thousand kilometres of track, about 40 asset types. And one property that will matter later: it is topology-first. Every signal, every balise is positioned on the network graph, not just as a point on a map.
 -->
 
 ---
@@ -222,7 +232,7 @@ station: Value
 <ValueTour />
 
 <!--
-[0:15] So what does a knowledge graph give the business? Six stops on this line, all running on the same graph: the portal, key figures, the search builder, the TPS mapping, the validation portal and the REST API.
+[0:15] So what does a knowledge graph give the business? Eight stops on this line, all running on the same graph: the portal, the entity pages, key figures, the search builder, DIM Atlas, the TPS mapping, the validation portal and the REST API.
 -->
 
 ---
@@ -233,6 +243,16 @@ layout: full
 
 <!--
 [0:25] Let me show you the value. This is the DIM portal; everything on it comes from the knowledge graph: railML files per subnetwork, and the datasets in RDF, JSON-LD and CSV.
+-->
+
+---
+layout: full
+---
+
+<Clip full src="/assets/03-entity-dereferencing.gif" caption="Every IRI resolves · the Kongsvinger operational point: map, data model and all its facts" />
+
+<!--
+[0:30] Every identifier in the graph is a web address you can open. This is Kongsvinger station: its IRI on data.banenor.no opens a page with what it is, where it is on the map, how it sits in DIM's data model, and every fact we hold about it, with links to the tracks, platforms, signals and switches in it. Click any of those and you're on their page. Linked data, the way it was meant to work.
 -->
 
 ---
@@ -253,6 +273,16 @@ layout: full
 
 <!--
 [0:20] The search builder: people build SPARQL queries by clicking, without knowing SPARQL.
+-->
+
+---
+layout: full
+---
+
+<Clip full src="/assets/08-dim-atlas.png" caption="DIM Atlas · every asset on the map, filtered by class, and a line profile of gradient and speed" />
+
+<!--
+[0:30] DIM Atlas puts the whole graph on a map: almost two hundred thousand objects, from operational points to signals and balises, with the counts per class on the left. Pick a line, here Kongsvingerbanen, and you get its profile: gradient and maximum speed along the 214 kilometres. It's all computed from the graph, with the filters taken from the same SHACL shapes I'll show you later.
 -->
 
 ---
